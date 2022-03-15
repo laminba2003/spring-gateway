@@ -1,0 +1,17 @@
+server:
+    port: 8089
+logging:
+    level:
+        org:
+            springframework:
+                web: TRACE
+spring:
+    application:
+        name: spring-gateway
+    cloud:
+        gateway:
+            routes:
+                - id: countries_route
+                  uri: http://localhost:9090
+                  predicates:
+                      - Path=/countries/*
