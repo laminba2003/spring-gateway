@@ -30,7 +30,9 @@ To enable this, set **spring.cloud.gateway.discovery.locator.enabled=true** and 
 
 ## The Gateway Metrics Filter
    
-To enable gateway metrics, add spring-boot-starter-actuator as a project dependency. Then, by default, the gateway metrics filter runs as long as the property spring.cloud.gateway.metrics.enabled is not set to false. This filter adds a timer metric named spring.cloud.gateway.requests with the following tags:
+To enable gateway metrics, add **spring-boot-starter-actuator** as a project dependency. 
+Then, by default, the gateway metrics filter runs as long as the property **spring.cloud.gateway.metrics.enabled** is not set to false. 
+This filter adds a timer metric named **spring.cloud.gateway.requests** with the following tags:
 
 - routeId: The route ID.
 
