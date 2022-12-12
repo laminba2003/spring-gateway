@@ -48,7 +48,7 @@ In addition, through the property **spring.cloud.gateway.metrics.tags.path.enabl
 
 - path: Path of the request.
 
-These metrics are then available to be scraped from /actuator/metrics/spring.cloud.gateway.requests and can be easily integrated with Prometheus to create a Grafana dashboard.
+These metrics are then available to be scraped from **/actuator/metrics/spring.cloud.gateway.requests** and can be easily integrated with Prometheus to create a Grafana dashboard.
 
 ## Setup
 
