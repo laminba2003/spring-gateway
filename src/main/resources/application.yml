@@ -8,6 +8,13 @@ spring:
     consul:
       host: localhost
       port: 8500
+      discovery:
+        instance-id: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}
+        health-check-critical-timeout: "1m"
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        prefer-ip-address: true
     gateway:
       metrics:
         enabled: true
