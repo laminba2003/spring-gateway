@@ -9,6 +9,11 @@ spring:
       host: localhost
       port: 8500
     gateway:
+      metrics:
+        enabled: true
+        tags:
+          path:
+            enabled: true
       discovery:
         locator:
           enabled: true
@@ -24,7 +29,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,gateway,prometheus
+        include: health,info,metrics,gateway,prometheus
   info:
     env:
       enabled: true

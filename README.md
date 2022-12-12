@@ -28,6 +28,28 @@ You can configure the gateway to create routes based on services registered with
 
 To enable this, set **spring.cloud.gateway.discovery.locator.enabled=true** and make sure a DiscoveryClient implementation (such as Netflix Eureka, Consul, or Zookeeper) is on the classpath and enabled.
 
+## 7.8. The Gateway Metrics Filter
+   
+To enable gateway metrics, add spring-boot-starter-actuator as a project dependency. Then, by default, the gateway metrics filter runs as long as the property spring.cloud.gateway.metrics.enabled is not set to false. This filter adds a timer metric named spring.cloud.gateway.requests with the following tags:
+
+- routeId: The route ID.
+
+- routeUri: The URI to which the API is routed.
+
+- outcome: The outcome, as classified by HttpStatus.Series.
+
+- status: The HTTP status of the request returned to the client.
+
+- httpStatusCode: The HTTP Status of the request returned to the client.
+
+- httpMethod: The HTTP method used for the request.
+
+In addition, through the property **spring.cloud.gateway.metrics.tags.path.enabled** (by default, set to false), you can activate an extra metric with the tag:
+
+- path: Path of the request.
+
+These metrics are then available to be scraped from /actuator/metrics/spring.cloud.gateway.requests and can be easily integrated with Prometheus to create a Grafana dashboard.
+
 ## Setup
 
 ### pom.xml
@@ -69,29 +91,35 @@ To enable this, set **spring.cloud.gateway.discovery.locator.enabled=true** and 
 
 ```yaml
 spring:
-    application:
-        name: spring-gateway
-    cloud:
-      consul:
-        host: localhost
-        port: 8500
-      gateway:
-        discovery:
-          locator:
+  application:
+    name: spring-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+    gateway:
+      metrics:
+        enabled: true
+        tags:
+          path:
             enabled: true
+      discovery:
+        locator:
+          enabled: true
 
 info:
   application:
     name: Spring Cloud Gateway
+
 management:
-    endpoint:
-      gateway:
-        enabled: true
-    endpoints:
-        web:
-          exposure:
-            include: health,info,gateway,prometheus
-    info:
-      env:
-        enabled: true
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway,prometheus
+  info:
+    env:
+      enabled: true
 ```
