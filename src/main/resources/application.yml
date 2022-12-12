@@ -1,17 +1,34 @@
 server:
-    port: 8089
-logging:
-    level:
-        org:
-            springframework:
-                web: TRACE
+  port: 8089
+
 spring:
-    application:
-        name: spring-gateway
-    cloud:
-        gateway:
-            routes:
-                - id: countries_route
-                  uri: http://localhost:9090
-                  predicates:
-                      - Path=/countries/*
+  application:
+    name: spring-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+info:
+  application:
+    name: Spring Cloud Gateway
+
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway,prometheus
+  info:
+    env:
+      enabled: true
+
+logging:
+  level:
+    org.springframework.web: TRACE
