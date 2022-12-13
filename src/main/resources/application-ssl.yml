@@ -1,7 +1,14 @@
+server:
+  ssl:
+    enabled: true
+    key-store: classpath:server.jks
+    key-store-password: changeit
+    key-alias: thinktech
+
 spring:
   cloud:
     gateway:
       httpclient:
         ssl:
           trusted-x509-certificates:
-            - server.crt
+            - classpath:server.crt
