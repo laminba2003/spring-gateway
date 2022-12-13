@@ -3,4 +3,5 @@ spring:
     gateway:
       httpclient:
         ssl:
-         use-insecure-trust-manager: true
+          trusted-x509-certificates:
+            - server.crt
