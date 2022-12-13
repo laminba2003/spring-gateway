@@ -142,7 +142,8 @@ server:
     key-alias: thinktech
 ```
 
-Using an insecure trust manager is not suitable for production. For a production deployment, you can configure the gateway with a set of known certificates that it can trust with the following configuration:
+You can route gateway routes to both HTTP and HTTPS backends. If you are routing to an HTTPS backend, you can configure the gateway with a set of known certificates that it can trust with the following configuration:
+
 
 ### application.yml
 
