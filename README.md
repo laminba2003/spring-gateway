@@ -130,8 +130,6 @@ management:
 
 The gateway can listen for requests on HTTPS by following the usual Spring server configuration. The following example shows how to do so:
 
-### application.yml
-
 ```yaml
 server:
   ssl:
@@ -143,9 +141,6 @@ server:
 ```
 
 You can route gateway routes to both HTTP and HTTPS backends. If you are routing to an HTTPS backend, you can configure the gateway with a set of known certificates that it can trust with the following configuration:
-
-
-### application.yml
 
 ```yaml
 spring:
