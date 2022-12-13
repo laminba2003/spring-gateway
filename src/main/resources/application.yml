@@ -44,3 +44,5 @@ management:
 logging:
   level:
     org.springframework.web: TRACE
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: TRACE

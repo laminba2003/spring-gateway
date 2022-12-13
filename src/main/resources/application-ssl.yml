@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+         use-insecure-trust-manager: true
