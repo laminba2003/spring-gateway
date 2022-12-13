@@ -3,6 +3,7 @@ server:
     enabled: true
     key-store: classpath:server.jks
     key-store-password: changeit
+    key-store-type: JKS
     key-alias: thinktech
 
 spring:

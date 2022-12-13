@@ -125,3 +125,33 @@ management:
     env:
       enabled: true
 ```
+
+## TLS and SSL
+
+The gateway can listen for requests on HTTPS by following the usual Spring server configuration. The following example shows how to do so:
+
+### application.yml
+
+```yaml
+server:
+  ssl:
+    enabled: true
+    key-store: classpath:server.jks
+    key-store-password: changeit
+    key-store-type: JKS
+    key-alias: thinktech
+```
+
+Using an insecure trust manager is not suitable for production. For a production deployment, you can configure the gateway with a set of known certificates that it can trust with the following configuration:
+
+### application.yml
+
+```yaml
+spring:
+  cloud:
+    gateway:
+      httpclient:
+        ssl:
+          trusted-x509-certificates:
+            - classpath:server.crt
+```
