@@ -151,3 +151,24 @@ spring:
           trusted-x509-certificates:
             - classpath:server.crt
 ```
+
+You can generate your own certificate with the *openssl* tool following these steps:
+
+### Create self-signed certificate
+
+```
+openssl req -new -config server.cnf -keyout server.key -out server.csr
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt -extfile server.cnf -extensions req_ext
+```
+
+### Convert the x.509 certificate and key to a pkcs12 file
+
+```
+openssl pkcs12 -export -in server.crt -inkey server.key -out server.p12 -name thinktech
+```
+
+### Convert the pkcs12 file to a Java keystore
+
+```
+keytool -importkeystore -deststorepass changeit -destkeypass changeit -destkeystore server.jks -srckeystore server.p12 -srcstoretype PKCS12 -srcstorepass changeit -alias thinktech
+```
