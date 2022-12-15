@@ -7,7 +7,6 @@
 FQDN = DESKTOP-GJ9JFOE.mshome.net
 
 # the name of your organization
-# (see also https://www.switch.ch/pki/participants/)
 ORGNAME = ThinkTech
 
 # subjectAltName entries: to add DNS aliases to the CSR, delete
