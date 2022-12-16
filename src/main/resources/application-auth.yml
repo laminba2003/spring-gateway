@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: spring-consul
+          uri: lb://spring-consul
+          predicates:
+            - Path=/resources/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/training/protocol/openid-connect/certs
+

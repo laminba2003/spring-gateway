@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: spring-consul
+          uri: lb://spring-consul
+          predicates:
+            - Path=/resources/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay
+  security:
+    oauth2:
+      client:
+        registration:
+          gateway:
+            provider: keycloak
+            client-id: spring
+            client-secret: tkkH2u6lTvxh3JFsaveNQuXPWXFkd4yw
+            authorization-grant-type: authorization_code
+            redirectUri: https://localhost:8089/login/oauth2/code/gateway
+            scope: openid,profile,email
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:8080/realms/training/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/realms/training/protocol/openid-connect/token
+            user-info-uri: http://localhost:8080/realms/training/protocol/openid-connect/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: http://localhost:8080/realms/training/protocol/openid-connect/certs

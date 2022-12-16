@@ -13,7 +13,7 @@ ORGNAME = ThinkTech
 # the '#' character in the ALTNAMES line, and change the subsequent
 # 'DNS:' entries accordingly. Please note: all DNS names must
 # resolve to the same IP address as the FQDN.
-ALTNAMES = DNS:host.docker.internal , DNS:localhost, IP:127.0.0.1
+ALTNAMES = DNS:DESKTOP-GJ9JFOE.mshome.net, DNS:host.docker.internal , DNS:localhost, IP:127.0.0.1
 
 # --- no modifications required below ---
 [ req ]
