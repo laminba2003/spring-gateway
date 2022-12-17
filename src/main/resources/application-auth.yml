@@ -11,7 +11,7 @@ spring:
             - Path=/resources/**
           filters:
             - StripPrefix=1
-            - TokenRelay
+            - TokenRelay=
   security:
     oauth2:
       resourceserver:
