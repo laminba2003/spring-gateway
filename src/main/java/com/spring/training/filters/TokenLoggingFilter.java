@@ -8,8 +8,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -24,7 +25,8 @@ public class TokenLoggingFilter extends AbstractGatewayFilterFactory<TokenLoggin
         return (exchange, chain) -> {
             if (config.isEnabled()) {
                 log.info("Pre TokenLoggingFilter : logging the Bearer Token");
-                log.info(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION).get(0));
+                Optional<List<String>> headers = Optional.ofNullable(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION));
+                headers.ifPresent(header -> log.info(header.get(0)));
             }
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 if (config.isEnabled()) {
@@ -36,7 +38,7 @@ public class TokenLoggingFilter extends AbstractGatewayFilterFactory<TokenLoggin
 
     @Override
     public List<String> shortcutFieldOrder() {
-        return Arrays.asList("enabled");
+        return Collections.singletonList("enabled");
     }
 
     @Data
