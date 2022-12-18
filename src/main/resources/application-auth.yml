@@ -4,6 +4,10 @@ spring:
       discovery:
         locator:
           enabled: false
+      default-filters:
+        - RemoveRequestHeader=Cookie
+        - RemoveRequestHeader=Set-Cookie
+        - TokenRelay=
       routes:
         - id: spring-consul
           uri: lb://spring-consul
@@ -11,7 +15,6 @@ spring:
             - Path=/resources/**
           filters:
             - StripPrefix=1
-            - TokenRelay=
   security:
     oauth2:
       resourceserver:
