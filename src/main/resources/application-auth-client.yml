@@ -8,6 +8,7 @@ spring:
         - RemoveRequestHeader=Cookie
         - RemoveRequestHeader=Set-Cookie
         - TokenRelay=
+        - TokenLoggingFilter=true
       routes:
         - id: spring-consul
           uri: lb://spring-consul
