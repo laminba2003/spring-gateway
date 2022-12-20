@@ -17,7 +17,7 @@ public class SecurityConfig {
 
     @Bean
     @Profile("auth")
-    public SecurityWebFilterChain authSecurityFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain oauth2SecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
                 .pathMatchers("/actuator/**").permitAll()
                 .pathMatchers("/**").authenticated())
@@ -28,7 +28,7 @@ public class SecurityConfig {
 
     @Bean
     @Profile("auth-client")
-    public SecurityWebFilterChain authClientSecurityFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain oauth2ClientSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
                 .pathMatchers("/actuator/**").permitAll()
                 .pathMatchers("/**").authenticated())
