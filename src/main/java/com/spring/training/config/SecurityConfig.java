@@ -41,12 +41,12 @@ public class SecurityConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin(CorsConfiguration.ALL);
-        config.addAllowedHeader(CorsConfiguration.ALL);
-        config.addAllowedMethod(CorsConfiguration.ALL);
-        source.registerCorsConfiguration("/**", config);
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOrigin(CorsConfiguration.ALL);
+        configuration.addAllowedHeader(CorsConfiguration.ALL);
+        configuration.addAllowedMethod(CorsConfiguration.ALL);
+        source.registerCorsConfiguration("/**", configuration);
         return new CorsWebFilter(source);
     }
 

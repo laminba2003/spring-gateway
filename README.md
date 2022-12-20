@@ -1,6 +1,8 @@
 # Spring Cloud Gateway
 
 Spring Cloud Gateway provides a library for building an API Gateway on top of Spring WebFlux. It aims to provide a simple, yet effective way to route to APIs and provide cross cutting concerns to them such as: security, monitoring/metrics, and resiliency.
+Spring Cloud Gateway requires the Netty runtime provided by Spring Boot and Spring WebFlux. It does not work
+in a traditional Servlet Container or when built as a WAR.
 
 ## Features
 
@@ -22,6 +24,16 @@ Spring Cloud Gateway features:
 
 - Path Rewriting
 
+## Glossary
+
+- Route: The basic building block of the gateway. It is defined by an ID, a destination URI, a collection of predicates,
+and a collection of filters. A route is matched if the aggregate predicate is true.
+
+- Predicate: This is a Java 8 Function Predicate. The input type is a Spring Framework ServerWebExchange . This lets
+you match on anything from the HTTP request, such as headers or parameters.
+
+- Filter: These are instances of GatewayFilter that have been constructed with a specific factory. Here, you can
+modify requests and responses before or after sending the downstream request.
 
 ## Setup
 

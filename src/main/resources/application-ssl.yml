@@ -13,3 +13,7 @@ spring:
         ssl:
           trusted-x509-certificates:
             - classpath:server.crt
+    consul:
+      discovery:
+        health-check-tls-skip-verify: true
+        scheme: https

@@ -23,6 +23,8 @@ spring:
       discovery:
         locator:
           enabled: true
+      loadbalancer:
+        use404: true
 
 info:
   application:

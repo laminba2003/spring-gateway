@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
@@ -13,10 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@Component
-public class TokenLoggingFilter extends AbstractGatewayFilterFactory<TokenLoggingFilter.Config> {
+public class TokenLoggingGatewayFilterFactory extends AbstractGatewayFilterFactory<TokenLoggingGatewayFilterFactory.Config> {
 
-    public TokenLoggingFilter() {
+    public TokenLoggingGatewayFilterFactory() {
         super(Config.class);
     }
 
@@ -45,4 +43,5 @@ public class TokenLoggingFilter extends AbstractGatewayFilterFactory<TokenLoggin
     public static class Config {
         boolean enabled = true;
     }
+
 }
