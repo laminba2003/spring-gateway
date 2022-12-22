@@ -25,7 +25,7 @@ spring:
             client-id: spring
             client-secret: tkkH2u6lTvxh3JFsaveNQuXPWXFkd4yw
             authorization-grant-type: authorization_code
-            redirectUri: https://localhost/login/oauth2/code/gateway
+            redirectUri: "{baseUrl}/login/oauth2/code/gateway"
             scope: openid,profile,email
         provider:
           keycloak:

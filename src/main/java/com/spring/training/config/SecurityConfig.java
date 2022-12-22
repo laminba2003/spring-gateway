@@ -3,13 +3,22 @@ package com.spring.training.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
+import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+import java.util.*;
+
+import static com.spring.training.config.Claims.ROLES;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -21,7 +30,7 @@ public class SecurityConfig {
         http.authorizeExchange(exchanges -> exchanges
                 .pathMatchers("/actuator/**").permitAll()
                 .pathMatchers("/**").authenticated())
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt().jwtAuthenticationConverter(new JwtConverter()))
                 .cors().and().csrf().disable();
         return http.build();
     }
@@ -32,10 +41,27 @@ public class SecurityConfig {
         http.authorizeExchange(exchanges -> exchanges
                 .pathMatchers("/actuator/**").permitAll()
                 .pathMatchers("/**").authenticated())
-                .oauth2Login(oauth2Login -> Customizer.withDefaults())
-                .oauth2Client(oauth2Client -> Customizer.withDefaults())
+                .oauth2Login(oauth2Login -> withDefaults())
+                .oauth2Client(oauth2Client -> withDefaults())
                 .cors().and().csrf().disable();
         return http.build();
+    }
+
+    @Bean
+    @Profile("auth-client")
+    public GrantedAuthoritiesMapper grantedAuthoritiesMapper() {
+        return (authorities) -> {
+            Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
+            authorities.forEach(grantedAuthority -> {
+                if(OidcUserAuthority.class.isInstance(grantedAuthority)) {
+                    OidcUserAuthority oidcUserAuthority = (OidcUserAuthority) grantedAuthority;
+                    OidcUserInfo userInfo = oidcUserAuthority.getUserInfo();
+                    List<String> roles = Optional.ofNullable(userInfo.getClaimAsStringList(ROLES)).orElse(new ArrayList<>());
+                    roles.stream().map(authority -> new SimpleGrantedAuthority("ROLE_" + authority)).forEach(mappedAuthorities::add);
+                }
+            });
+            return mappedAuthorities;
+        };
     }
 
     @Bean
