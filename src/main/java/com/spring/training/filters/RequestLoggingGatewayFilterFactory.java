@@ -18,8 +18,6 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 public class RequestLoggingGatewayFilterFactory extends AbstractGatewayFilterFactory<RequestLoggingGatewayFilterFactory.Config> {
@@ -46,15 +44,15 @@ public class RequestLoggingGatewayFilterFactory extends AbstractGatewayFilterFac
                 if (body instanceof Flux) {
                     Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
                     return super.writeWith(fluxBody.buffer().map(dataBuffers -> {
-                        DefaultDataBuffer joinedBuffers = new DefaultDataBufferFactory().join(dataBuffers);
-                        byte[] content = new byte[joinedBuffers.readableByteCount()];
-                        joinedBuffers.read(content);
+                        DefaultDataBuffer buffer = new DefaultDataBufferFactory().join(dataBuffers);
+                        byte[] content = new byte[buffer.readableByteCount()];
+                        buffer.read(content);
                         String responseBody = new String(content, StandardCharsets.UTF_8);
-                        log.info("handling request completed for URI : {} with method : {}, response body : {} and user : {} ", request.getURI(), request.getMethodValue(), responseBody, principal);
+                        log.info("handling request completed for URI : {} with method : {}, response body : {} and user : {} ", request.getURI(), request.getMethod(), responseBody, principal);
                         DataBufferFactory dataBufferFactory = response.bufferFactory();
                         return dataBufferFactory.wrap(responseBody.getBytes());
                     })).onErrorResume(err -> {
-                        log.error("error while handling request for URI : {} with method : {} , error message : {} and user : {}", request.getURI(), request.getMethodValue(), err.getMessage(), principal);
+                        log.error("error while handling request for URI : {} with method : {} , error message : {} and user : {}", request.getURI(), request.getMethod(), err.getMessage(), principal);
                         return Mono.empty();
                     });
                 }
@@ -63,14 +61,8 @@ public class RequestLoggingGatewayFilterFactory extends AbstractGatewayFilterFac
         };
     }
 
-    @Override
-    public List<String> shortcutFieldOrder() {
-        return Collections.singletonList("enabled");
-    }
-
     @Data
     public static class Config {
-        boolean enabled = true;
     }
 
 }

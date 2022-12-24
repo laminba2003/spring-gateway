@@ -28,7 +28,8 @@ public class SecurityConfig {
     @Profile("auth")
     public SecurityWebFilterChain oauth2SecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/actuator/**").permitAll()
+                .pathMatchers("/actuator/**")
+                .hasAnyRole("admin")
                 .pathMatchers("/**").authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt().jwtAuthenticationConverter(new JwtConverter()))
                 .cors().and().csrf().disable();
@@ -39,7 +40,8 @@ public class SecurityConfig {
     @Profile("auth-client")
     public SecurityWebFilterChain oauth2ClientSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/actuator/**").permitAll()
+                .pathMatchers("/actuator/**")
+                .hasAnyRole("admin")
                 .pathMatchers("/**").authenticated())
                 .oauth2Login(oauth2Login -> withDefaults())
                 .oauth2Client(oauth2Client -> withDefaults())
@@ -53,7 +55,7 @@ public class SecurityConfig {
         return (authorities) -> {
             Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
             authorities.forEach(grantedAuthority -> {
-                if(OidcUserAuthority.class.isInstance(grantedAuthority)) {
+                if (grantedAuthority instanceof OidcUserAuthority) {
                     OidcUserAuthority oidcUserAuthority = (OidcUserAuthority) grantedAuthority;
                     OidcUserInfo userInfo = oidcUserAuthority.getUserInfo();
                     List<String> roles = Optional.ofNullable(userInfo.getClaimAsStringList(ROLES)).orElse(new ArrayList<>());
