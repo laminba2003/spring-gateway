@@ -28,7 +28,9 @@ public class SecurityConfig {
     @Profile("auth")
     public SecurityWebFilterChain oauth2SecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/actuator/**")
+                .pathMatchers("/actuator/*")
+                .permitAll()
+                .pathMatchers("/actuator/gateway/**")
                 .hasRole("admin")
                 .pathMatchers("/**").authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt().jwtAuthenticationConverter(new JwtConverter()))
@@ -40,7 +42,9 @@ public class SecurityConfig {
     @Profile("auth-client")
     public SecurityWebFilterChain oauth2ClientSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/actuator/**")
+                .pathMatchers("/actuator/*")
+                .permitAll()
+                .pathMatchers("/actuator/gateway/**")
                 .hasRole("admin")
                 .pathMatchers("/**").authenticated())
                 .oauth2Login(oauth2Login -> withDefaults())

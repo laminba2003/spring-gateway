@@ -22,14 +22,13 @@ public class TokenLoggingGatewayFilterFactory extends AbstractGatewayFilterFacto
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> exchange.getPrincipal().flatMap(principal -> {
             if (config.isEnabled()) {
-                log.info("Pre TokenLoggingFilter : logging the Bearer Token");
+                log.debug("Pre TokenLoggingFilter : logging the Bearer Token");
                 Optional<List<String>> headers = Optional.ofNullable(exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION));
-                headers.ifPresent(header -> log.info(header.get(0)));
-                log.info(String.valueOf(principal));
+                headers.ifPresent(header -> log.debug(header.get(0)));
             }
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 if (config.isEnabled()) {
-                    log.info("Post TokenLoggingFilter logging");
+                    log.debug("Post TokenLoggingFilter logging");
                 }
             }));
         });

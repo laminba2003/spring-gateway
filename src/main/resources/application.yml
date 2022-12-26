@@ -43,8 +43,6 @@ management:
       enabled: true
 
 logging:
-  file: gateway.log
-  path: /logs
   level:
     org.springframework.web: TRACE
     org.springframework.cloud.gateway: TRACE

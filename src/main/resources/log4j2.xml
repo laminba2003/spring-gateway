@@ -12,14 +12,14 @@
         </Console>
        <Console name="Console_JSON" target="SYSTEM_OUT" follow="true">
            <JsonLayout complete="false" compact="false">
-               <KeyValuePair key="service" value="spring-training"/>
+               <KeyValuePair key="service" value="spring-gateway"/>
                <KeyValuePair key="traceId" value="$${ctx:traceId}"/>
                <KeyValuePair key="spanId" value="$${ctx:spanId}"/>
            </JsonLayout>
        </Console>
         <File name="JSONLogfileAppender" fileName="logs/gateway.json">
             <JsonLayout compact="true" eventEol="true" properties="false" stacktraceAsString="false" includeTimeMillis="true">
-                <KeyValuePair key="service" value="spring-training"/>
+                <KeyValuePair key="service" value="spring-gateway"/>
                 <KeyValuePair key="traceId" value="$${ctx:traceId}"/>
                 <KeyValuePair key="spanId" value="$${ctx:spanId}"/>
             </JsonLayout>

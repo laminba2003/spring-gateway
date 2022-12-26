@@ -11,8 +11,8 @@ public class LoggingFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("handling request for URI : {}", exchange.getRequest().getURI());
-        return chain.filter(exchange).then(Mono.fromRunnable(() -> log.info("handling request completed")));
+        log.trace("handling request for URI : {}", exchange.getRequest().getURI());
+        return chain.filter(exchange).then(Mono.fromRunnable(() -> log.trace("handling request completed")));
     }
 
 }
