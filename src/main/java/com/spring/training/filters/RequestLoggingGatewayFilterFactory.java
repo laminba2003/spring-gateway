@@ -43,8 +43,8 @@ public class RequestLoggingGatewayFilterFactory extends AbstractGatewayFilterFac
             public Mono<Void> writeWith(final Publisher<? extends DataBuffer> body) {
                 if (body instanceof Flux) {
                     Flux<? extends DataBuffer> fluxBody = (Flux<? extends DataBuffer>) body;
-                    return super.writeWith(fluxBody.buffer().map(dataBuffers -> {
-                        DefaultDataBuffer buffer = new DefaultDataBufferFactory().join(dataBuffers);
+                    return super.writeWith(fluxBody.buffer().map(data -> {
+                        DefaultDataBuffer buffer = new DefaultDataBufferFactory().join(data);
                         byte[] content = new byte[buffer.readableByteCount()];
                         buffer.read(content);
                         String responseBody = new String(content, StandardCharsets.UTF_8);
