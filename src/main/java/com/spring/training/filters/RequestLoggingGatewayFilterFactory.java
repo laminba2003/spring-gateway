@@ -29,8 +29,8 @@ public class RequestLoggingGatewayFilterFactory extends AbstractGatewayFilterFac
     @Override
     public GatewayFilter apply(Config config) {
         return new OrderedGatewayFilter((exchange, chain) -> exchange.getPrincipal().flatMap(principal -> {
-            ServerHttpResponse response = exchange.getResponse();
             ServerHttpRequest request = exchange.getRequest();
+            ServerHttpResponse response = exchange.getResponse();
             ServerHttpResponseDecorator responseDecorator = decorateResponse(request, response, principal);
             log.info("handling request for URI : {} with method : {} and user : {}", request.getURI(), request.getMethod(), principal);
             return chain.filter(exchange.mutate().request(request).response(responseDecorator).build());
