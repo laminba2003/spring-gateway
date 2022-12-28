@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: spring-gateway
+  sleuth:
+    reactor:
+      instrumentation-type: DECORATE_ON_EACH
   cloud:
     consul:
       host: localhost
@@ -14,6 +17,7 @@ spring:
         health-check-critical-timeout: "1m"
         health-check-path: /actuator/health
         health-check-interval: 10s
+        hostname: DESKTOP-GJ9JFOE.mshome.net
     gateway:
       metrics:
         enabled: true
