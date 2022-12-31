@@ -36,6 +36,11 @@ services:
     networks:
       - es-net
 
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+    - 9411:9411
+
 networks:
   es-net:
     driver: bridge

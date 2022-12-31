@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: spring-gateway
+  zipkin:
+    enabled: false
   sleuth:
     reactor:
       instrumentation-type: DECORATE_ON_EACH
