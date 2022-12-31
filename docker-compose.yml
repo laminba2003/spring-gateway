@@ -38,8 +38,28 @@ services:
 
   zipkin:
     image: openzipkin/zipkin
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_INDEX=zipkin
+      - ES_HOSTS=http://es-container:9200
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
     ports:
     - 9411:9411
+
+  zipkin-dependencies:
+    image: openzipkin/zipkin-dependencies
+    environment:
+      - STORAGE_TYPE=elasticsearch
+      - ES_INDEX=zipkin
+      - ES_HOSTS=http://es-container:9200
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+
 
 networks:
   es-net:
