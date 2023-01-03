@@ -1,6 +1,5 @@
 package com.spring.training.filters;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -61,7 +60,6 @@ public class RequestLoggingGatewayFilterFactory extends AbstractGatewayFilterFac
         };
     }
 
-    @Data
     public static class Config {
     }
 
