@@ -12,7 +12,7 @@ spring:
         - RequestLogging=
       routes:
         - id: spring-consul
-          uri: lb://spring-consul
+          uri: lb://spring-consul-webclient
           predicates:
             - Path=/resources/**
           filters:
