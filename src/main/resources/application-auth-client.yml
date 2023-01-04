@@ -13,7 +13,11 @@ spring:
         - TokenRelay=
         - TokenLogging=true
         - RequestLogging=
-        - RequestRateLimiter=10,10,1
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10
+            redis-rate-limiter.burstCapacity: 20
+            redis-rate-limiter.requestedTokens: 1
       routes:
         - id: spring-consul
           uri: lb://spring-consul-webclient
