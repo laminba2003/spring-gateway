@@ -20,8 +20,6 @@ spring:
         health-check-path: /actuator/health
         health-check-interval: 10s
         hostname: DESKTOP-GJ9JFOE.mshome.net
-        catalog-services-watch:
-          enabled: false
     gateway:
       metrics:
         enabled: true
@@ -39,9 +37,6 @@ info:
     name: Spring Cloud Gateway
 
 management:
-  health:
-    consul:
-      enabled: false
   endpoint:
     gateway:
       enabled: true
