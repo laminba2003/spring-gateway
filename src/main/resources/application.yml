@@ -31,6 +31,9 @@ spring:
           enabled: true
       loadbalancer:
         use404: true
+      filter:
+        request-rate-limiter:
+          deny-empty-key: true
 
 info:
   application:

@@ -1,4 +1,7 @@
 spring:
+  redis:
+    host: localhost
+    port: 6379
   cloud:
     gateway:
       discovery:
@@ -10,6 +13,7 @@ spring:
         - TokenRelay=
         - TokenLogging=true
         - RequestLogging=
+        - RequestRateLimiter=10,10,1
       routes:
         - id: spring-consul
           uri: lb://spring-consul-webclient
