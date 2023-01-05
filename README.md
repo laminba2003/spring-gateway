@@ -206,6 +206,40 @@ spring:
           jwk-set-uri: http://localhost:8080/realms/training/protocol/openid-connect/certs
 ```
 
+## The Redis RateLimiter Filter
+
+The Redis implementation is based off of work done at Stripe. It requires the use of the **spring-boot-starter-data-redis-reactive** Spring Boot starter.
+The algorithm used is the Token Bucket Algorithm.
+
+The **redis-rate-limiter.replenishRate** property is how many requests per second you want a user to be allowed to
+do, without any dropped requests. This is the rate at which the token bucket is filled.
+
+The **redis-rate-limiter.burstCapacity** property is the maximum number of requests a user is allowed to do in a
+single second. This is the number of tokens the token bucket can hold. Setting this value to zero blocks all requests.
+
+The **redis-rate-limiter.requestedTokens** property is how many tokens a request costs. This is the number of tokens
+taken from the bucket for each request and defaults to 1.
+
+A steady rate is accomplished by setting the same value in replenishRate and burstCapacity. Temporary bursts can
+be allowed by setting burstCapacity higher than replenishRate. In this case, the rate limiter needs to be allowed 
+some time between bursts (according to replenishRate ), as two consecutive bursts will result in dropped requests
+( HTTP 429 - Too Many Requests ). 
+
+```yaml
+spring:
+ cloud:
+   gateway:
+     routes:
+     - id: requestratelimiter_route
+       uri: https://example.org
+       filters:
+         - name: RequestRateLimiter
+         args:
+           redis-rate-limiter.replenishRate: 10
+           redis-rate-limiter.burstCapacity: 20
+           redis-rate-limiter.requestedTokens: 1
+```
+
 ## TLS and SSL
 
 The gateway can listen for requests on HTTPS by following the usual Spring server configuration. The following example shows how to do so:
