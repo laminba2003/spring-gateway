@@ -7,6 +7,9 @@ spring:
       discovery:
         locator:
           enabled: false
+      filter:
+        request-rate-limiter:
+          deny-empty-key: true
       default-filters:
         - RemoveRequestHeader=Cookie
         - RemoveRequestHeader=Set-Cookie
