@@ -10,24 +10,69 @@ spring:
       filter:
         request-rate-limiter:
           deny-empty-key: true
-      default-filters:
-        - RemoveRequestHeader=Cookie
-        - RemoveRequestHeader=Set-Cookie
-        - TokenRelay=
-        - TokenLogging=true
-        - RequestLogging=
-        - name: RequestRateLimiter
-          args:
-            redis-rate-limiter.replenishRate: 10
-            redis-rate-limiter.burstCapacity: 20
-            redis-rate-limiter.requestedTokens: 1
       routes:
-        - id: spring-consul
+        - id: spring-consul-webclient-service
           uri: lb://spring-consul-webclient
           predicates:
-            - Path=/resources/**
+            - Path=/spring-consul-webclient/**
           filters:
             - StripPrefix=1
+            - RemoveRequestHeader=Cookie
+            - RemoveRequestHeader=Set-Cookie
+            - TokenRelay=
+            - TokenLogging=true
+            - RequestLogging=
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+          order: 2
+        - id: spring-consul-webclient-docs
+          uri: lb://spring-consul-webclient
+          predicates:
+            - Path=/spring-consul-webclient/v3/api-docs
+          order: 1
+          filters:
+            - StripPrefix=1
+        - id: spring-consul-service
+          uri: lb://spring-consul
+          predicates:
+            - Path=/spring-consul/**
+          filters:
+            - StripPrefix=1
+            - RemoveRequestHeader=Cookie
+            - RemoveRequestHeader=Set-Cookie
+            - TokenRelay=
+            - TokenLogging=true
+            - RequestLogging=
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                redis-rate-limiter.requestedTokens: 1
+          order: 2
+        - id: spring-consul-docs
+          uri: lb://spring-consul
+          predicates:
+            - Path=/spring-consul/v3/api-docs
+          order: 1
+          filters:
+            - StripPrefix=1
+        - id: openapi
+          uri: https://localhost
+          predicates:
+            - Path=/v3/api-docs/**
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+          order: 2
+        - id: swagger-config
+          uri: https://localhost
+          predicates:
+            - Path=/v3/api-docs/swagger-config
+          filters:
+            - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}
+          order: 1
   security:
     oauth2:
       resourceserver:

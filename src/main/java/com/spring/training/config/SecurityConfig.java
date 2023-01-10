@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.*;
@@ -24,12 +24,16 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebFluxSecurity
 public class SecurityConfig {
 
+    static final String[] whitelist = {
+            "/actuator/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**",
+            "/*/v3/api-docs", "/swagger-config"
+    };
+
     @Bean
     @Profile("auth")
     public SecurityWebFilterChain oauth2SecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/actuator/*")
-                .permitAll()
+                .pathMatchers(whitelist).permitAll()
                 .pathMatchers("/actuator/gateway/**")
                 .hasRole("admin")
                 .pathMatchers("/**").authenticated())
@@ -42,8 +46,7 @@ public class SecurityConfig {
     @Profile("auth-client")
     public SecurityWebFilterChain oauth2ClientSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/actuator/*")
-                .permitAll()
+                .pathMatchers(whitelist).permitAll()
                 .pathMatchers("/actuator/gateway/**")
                 .hasRole("admin")
                 .pathMatchers("/**").authenticated())
@@ -71,15 +74,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsWebFilter corsWebFilter() {
+    public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin(CorsConfiguration.ALL);
-        configuration.addAllowedHeader(CorsConfiguration.ALL);
-        configuration.addAllowedMethod(CorsConfiguration.ALL);
-        source.registerCorsConfiguration("/**", configuration);
-        return new CorsWebFilter(source);
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern(CorsConfiguration.ALL);
+        config.setAllowedHeaders(Collections.singletonList(CorsConfiguration.ALL));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PUT", "OPTIONS", "PATCH", "DELETE"));
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 
 }

@@ -52,6 +52,17 @@ management:
     env:
       enabled: true
 
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: spring
+      client-secret: tkkH2u6lTvxh3JFsaveNQuXPWXFkd4yw
+      authorizationUrl: http://localhost:8080/realms/training/protocol/openid-connect/auth
+      tokenUrl: http://localhost:8080/realms/training/protocol/openid-connect/token
+  cache:
+    disabled: true
+
+
 logging:
   level:
     org.springframework.web: TRACE
