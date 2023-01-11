@@ -11,7 +11,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-public class SwaggerController {
+public class SwaggerConfigController {
 
     final SwaggerConfigResource resource;
 
