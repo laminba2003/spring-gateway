@@ -10,6 +10,9 @@ spring:
       filter:
         request-rate-limiter:
           deny-empty-key: true
+      default-filters:
+        - RemoveRequestHeader=Cookie
+        - RemoveRequestHeader=Set-Cookie
       routes:
         - id: spring-consul-webclient-service
           uri: lb://spring-consul-webclient
@@ -17,8 +20,6 @@ spring:
             - Path=/spring-consul-webclient/**
           filters:
             - StripPrefix=1
-            - RemoveRequestHeader=Cookie
-            - RemoveRequestHeader=Set-Cookie
             - TokenRelay=
             - TokenLogging=true
             - RequestLogging=
@@ -41,8 +42,6 @@ spring:
             - Path=/spring-consul/**
           filters:
             - StripPrefix=1
-            - RemoveRequestHeader=Cookie
-            - RemoveRequestHeader=Set-Cookie
             - TokenRelay=
             - TokenLogging=true
             - RequestLogging=
