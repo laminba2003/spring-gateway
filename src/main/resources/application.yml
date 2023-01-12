@@ -62,6 +62,20 @@ springdoc:
   cache:
     disabled: true
 
+cors:
+  allowCredentials: true
+  allowedOriginPattern: "*"
+  allowedHeaders:
+    - "*"
+  allowedMethods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - PUT
+    - OPTIONS
+    - PATCH
+    - DELETE
 
 logging:
   level:
