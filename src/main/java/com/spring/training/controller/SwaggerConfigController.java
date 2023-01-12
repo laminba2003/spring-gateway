@@ -1,4 +1,4 @@
-package com.spring.training.config;
+package com.spring.training.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
