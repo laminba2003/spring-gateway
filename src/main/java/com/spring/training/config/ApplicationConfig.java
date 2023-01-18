@@ -1,8 +1,8 @@
 package com.spring.training.config;
 
-import com.spring.training.filters.LoggingFilter;
-import com.spring.training.filters.RequestLoggingGatewayFilterFactory;
-import com.spring.training.filters.TokenLoggingGatewayFilterFactory;
+import com.spring.training.filter.LoggingFilter;
+import com.spring.training.filter.RequestLoggingGatewayFilterFactory;
+import com.spring.training.filter.TokenLoggingGatewayFilterFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

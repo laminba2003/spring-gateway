@@ -1,4 +1,4 @@
-package com.spring.training.filters;
+package com.spring.training.filter;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

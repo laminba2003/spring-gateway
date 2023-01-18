@@ -31,7 +31,7 @@
             <AppenderRef ref="Console" />
         </Root>
 
-        <Logger name="com.spring.training.filters" level="info" additivity="false">
+        <Logger name="com.spring.training.filter" level="info" additivity="false">
             <AppenderRef ref="JSONLogfileAppender" />
         </Logger>
 
