@@ -1,4 +1,4 @@
-package com.spring.training.config;
+package com.spring.training.util;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.spring.training.config.Claims.ROLES;
+import static com.spring.training.util.Claims.ROLES;
 
 public class JwtConverter implements Converter<Jwt, Mono<AbstractAuthenticationToken>> {
 

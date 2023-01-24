@@ -1,5 +1,7 @@
 package com.spring.training.config;
 
+import com.spring.training.util.Cors;
+import com.spring.training.util.JwtConverter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +19,7 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.*;
 
-import static com.spring.training.config.Claims.ROLES;
+import static com.spring.training.util.Claims.ROLES;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration

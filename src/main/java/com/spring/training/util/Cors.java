@@ -1,4 +1,4 @@
-package com.spring.training.config;
+package com.spring.training.util;
 
 import lombok.Data;
 
