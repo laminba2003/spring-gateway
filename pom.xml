@@ -16,6 +16,7 @@
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>2021.0.0</spring-cloud.version>
+        <docker.image>docker.io/laminba2003/${project.artifactId}:${project.version}</docker.image>
     </properties>
     <dependencies>
         <dependency>
@@ -115,6 +116,16 @@
                 <artifactId>git-commit-id-plugin</artifactId>
                 <configuration>
                     <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <to>
+                        <image>${docker.image}</image>
+                    </to>
                 </configuration>
             </plugin>
         </plugins>
