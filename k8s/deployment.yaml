@@ -23,5 +23,7 @@ spec:
           env:
             - name: spring.cloud.consul.enabled
               value: "false"
+            - name: spring.profiles.active
+              value: auth
           resources: { }
 status: { }
