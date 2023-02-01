@@ -1,0 +1,13 @@
+apiVersion: skaffold/v4beta2
+kind: Config
+metadata:
+  name: spring-gateway
+build:
+  artifacts:
+  - image: docker.io/laminba2003/spring-gateway
+    jib:
+      project: com.spring.training:spring-gateway
+manifests:
+  rawYaml:
+  - k8s/deployment.yaml
+  - k8s/service.yaml

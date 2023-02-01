@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: spring-gateway
+  name: spring-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-gateway
+  strategy: { }
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: spring-gateway
+    spec:
+      containers:
+        - image: docker.io/laminba2003/spring-gateway
+          name: spring-gateway
+          env:
+            - name: spring.cloud.consul.enabled
+              value: "false"
+          resources: { }
+status: { }
