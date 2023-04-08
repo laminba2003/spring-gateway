@@ -286,3 +286,10 @@ openssl pkcs12 -export -in server.crt -inkey server.key -out server.p12 -name th
 ```
 keytool -importkeystore -deststorepass changeit -destkeypass changeit -destkeystore server.jks -srckeystore server.p12 -srcstoretype PKCS12 -srcstorepass changeit -alias thinktech
 ```
+
+To check if your certificate and private key belong to each other you can use this command line to see how values stack up;
+
+```
+openssl rsa -noout -modulus -in server.key | openssl md5
+openssl x509 -noout -modulus -in server.crt | openssl md5
+```
